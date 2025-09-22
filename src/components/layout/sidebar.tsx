@@ -4,16 +4,20 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/hooks/use-language"
+import { useRole } from "@/hooks/use-role"
 import { 
   BarChart3, 
   ShoppingCart, 
   Users, 
   Settings,
   Menu,
-  X
+  X,
+  Shield,
+  Eye
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { UserRole } from "@/types"
 
 const navigation = [
   { name: "dashboard", href: "/", icon: BarChart3 },
@@ -25,6 +29,7 @@ const navigation = [
 export function Sidebar() {
   const pathname = usePathname()
   const { t } = useLanguage()
+  const { role, setRole } = useRole()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -71,6 +76,36 @@ export function Sidebar() {
               )
             })}
           </nav>
+          
+          {/* Role Switcher */}
+          <div className="px-4 py-4 border-t">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium">Role</span>
+              <span className="text-xs text-muted-foreground">
+                {role === 'admin' ? 'Admin' : 'Viewer'}
+              </span>
+            </div>
+            <div className="flex gap-1">
+              <Button
+                variant={role === 'viewer' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setRole('viewer')}
+                className="flex-1 text-xs"
+              >
+                <Eye className="h-3 w-3 mr-1" />
+                Viewer
+              </Button>
+              <Button
+                variant={role === 'admin' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setRole('admin')}
+                className="flex-1 text-xs"
+              >
+                <Shield className="h-3 w-3 mr-1" />
+                Admin
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
 

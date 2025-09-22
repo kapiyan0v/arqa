@@ -49,3 +49,4 @@ export interface ChartData {
 
 export type Theme = 'light' | 'dark'
 export type Language = 'ru' | 'en'
+export type UserRole = 'viewer' | 'admin'

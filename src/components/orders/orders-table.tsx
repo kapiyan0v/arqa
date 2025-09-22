@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useLanguage } from "@/hooks/use-language"
+import { useRole } from "@/hooks/use-role"
 import { api } from "@/lib/api"
 import { Order } from "@/types"
 import { formatCurrency, formatDate } from "@/lib/utils"
@@ -40,6 +41,7 @@ export function OrdersTable({
   onStatusFilterChange
 }: OrdersTableProps) {
   const { t } = useLanguage()
+  const { isAdmin } = useRole()
   const queryClient = useQueryClient()
 
   const updateStatusMutation = useMutation({
@@ -152,18 +154,20 @@ export function OrdersTable({
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                       {t(order.status.toLowerCase())}
                     </span>
-                    <select
-                      value={order.status}
-                      onChange={(e) => handleStatusChange(order.id, e.target.value as Order['status'])}
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-xs border-none bg-background text-foreground focus:outline-none"
-                    >
-                      <option value="New">{t("new")}</option>
-                      <option value="Processing">{t("processing")}</option>
-                      <option value="Shipped">{t("shipped")}</option>
-                      <option value="Delivered">{t("delivered")}</option>
-                      <option value="Cancelled">{t("cancelled")}</option>
-                    </select>
+                    {isAdmin && (
+                      <select
+                        value={order.status}
+                        onChange={(e) => handleStatusChange(order.id, e.target.value as Order['status'])}
+                        onClick={(e) => e.stopPropagation()}
+                        className="text-xs border-none bg-background text-foreground focus:outline-none"
+                      >
+                        <option value="New">{t("new")}</option>
+                        <option value="Processing">{t("processing")}</option>
+                        <option value="Shipped">{t("shipped")}</option>
+                        <option value="Delivered">{t("delivered")}</option>
+                        <option value="Cancelled">{t("cancelled")}</option>
+                      </select>
+                    )}
                   </div>
                 </TableCell>
                 <TableCell className="text-right">{formatCurrency(order.total)}</TableCell>

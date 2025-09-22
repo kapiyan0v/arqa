@@ -1,63 +1,51 @@
-"use client"
-
-import { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { OrdersTable } from "@/components/orders/orders-table"
-import { OrderDetailsDialog } from "@/components/orders/order-details-dialog"
-import { useLanguage } from "@/hooks/use-language"
+import { Suspense } from "react"
+import dynamic from "next/dynamic"
 import { api } from "@/lib/api"
-import { Order } from "@/types"
+import { FilterOptions } from "@/types"
 
-export default function OrdersPage() {
-  const { t } = useLanguage()
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [statusFilter, setStatusFilter] = useState<string>("")
+// Dynamic imports for better bundle optimization
+const OrdersClient = dynamic(() => import("@/components/orders/orders-client").then(mod => ({ default: mod.OrdersClient })), {
+  loading: () => <div>Loading orders...</div>
+})
 
-  const { data: orders, isLoading } = useQuery({
-    queryKey: ['orders', searchTerm, statusFilter],
-    queryFn: () => api.getOrders({
-      period: 'ytd'
-    }),
-  })
+interface OrdersPageProps {
+  searchParams: {
+    search?: string
+    status?: string
+    period?: string
+    channel?: string
+    city?: string
+  }
+}
 
-  const filteredOrders = orders?.filter(order => {
-    const matchesSearch = !searchTerm || 
-      order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.customerId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.city.toLowerCase().includes(searchTerm.toLowerCase())
-    
-    const matchesStatus = !statusFilter || order.status === statusFilter
-    
-    return matchesSearch && matchesStatus
-  }) || []
+export default async function OrdersPage({ searchParams }: OrdersPageProps) {
+  // Parse search params into FilterOptions
+  const filters: FilterOptions = {
+    period: (searchParams.period as FilterOptions['period']) || 'ytd',
+    channel: searchParams.channel || '',
+    city: searchParams.city || ''
+  }
+
+  // Server-side data fetching
+  const orders = await api.getOrders(filters)
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t("orders")}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Orders</h1>
         <p className="text-muted-foreground">
-          {t("ordersDescription")}
+          Manage and track all orders
         </p>
       </div>
 
-      <OrdersTable 
-        orders={filteredOrders}
-        isLoading={isLoading}
-        onOrderClick={setSelectedOrder}
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        statusFilter={statusFilter}
-        onStatusFilterChange={setStatusFilter}
-      />
-
-      {selectedOrder && (
-        <OrderDetailsDialog
-          order={selectedOrder}
-          open={!!selectedOrder}
-          onOpenChange={() => setSelectedOrder(null)}
+      <Suspense fallback={<div>Loading orders table...</div>}>
+        <OrdersClient 
+          initialOrders={orders}
+          initialSearchTerm={searchParams.search || ""}
+          initialStatusFilter={searchParams.status || ""}
+          initialFilters={filters}
         />
-      )}
+      </Suspense>
     </div>
   )
 }

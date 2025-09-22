@@ -1,0 +1,128 @@
+{
+  "orders": [
+    {
+      "id": "ORD-1001",
+      "date": "2025-01-15",
+      "customerId": "CUS-001",
+      "city": "Алматы",
+      "channel": "Web",
+      "status": "New",
+      "total": 52700,
+      "items": [
+        { "sku": "SKU-1", "name": "Product A", "qty": 2, "price": 12000 },
+        { "sku": "SKU-2", "name": "Product B", "qty": 1, "price": 28700 }
+      ],
+      "comment": "Уточнить время доставки"
+    },
+    {
+      "id": "ORD-1002",
+      "date": "2025-01-14",
+      "customerId": "CUS-002",
+      "city": "Астана",
+      "channel": "Mobile",
+      "status": "Processing",
+      "total": 15600,
+      "items": [
+        { "sku": "SKU-3", "name": "Product C", "qty": 1, "price": 15600 }
+      ]
+    },
+    {
+      "id": "ORD-1003",
+      "date": "2025-01-13",
+      "customerId": "CUS-003",
+      "city": "Алматы",
+      "channel": "Offline",
+      "status": "Shipped",
+      "total": 89000,
+      "items": [
+        { "sku": "SKU-4", "name": "Product D", "qty": 3, "price": 25000 },
+        { "sku": "SKU-5", "name": "Product E", "qty": 1, "price": 14000 }
+      ]
+    },
+    {
+      "id": "ORD-1004",
+      "date": "2025-01-12",
+      "customerId": "CUS-001",
+      "city": "Алматы",
+      "channel": "Web",
+      "status": "Delivered",
+      "total": 23400,
+      "items": [
+        { "sku": "SKU-6", "name": "Product F", "qty": 2, "price": 11700 }
+      ]
+    },
+    {
+      "id": "ORD-1005",
+      "date": "2025-01-11",
+      "customerId": "CUS-004",
+      "city": "Шымкент",
+      "channel": "Mobile",
+      "status": "New",
+      "total": 67800,
+      "items": [
+        { "sku": "SKU-7", "name": "Product G", "qty": 1, "price": 67800 }
+      ]
+    },
+    {
+      "id": "ORD-1006",
+      "date": "2025-01-10",
+      "customerId": "CUS-005",
+      "city": "Астана",
+      "channel": "Web",
+      "status": "Processing",
+      "total": 12300,
+      "items": [
+        { "sku": "SKU-8", "name": "Product H", "qty": 1, "price": 12300 }
+      ]
+    },
+    {
+      "id": "ORD-1007",
+      "date": "2025-01-09",
+      "customerId": "CUS-002",
+      "city": "Астана",
+      "channel": "Offline",
+      "status": "Shipped",
+      "total": 45600,
+      "items": [
+        { "sku": "SKU-9", "name": "Product I", "qty": 2, "price": 22800 }
+      ]
+    },
+    {
+      "id": "ORD-1008",
+      "date": "2025-01-08",
+      "customerId": "CUS-006",
+      "city": "Алматы",
+      "channel": "Mobile",
+      "status": "Delivered",
+      "total": 78900,
+      "items": [
+        { "sku": "SKU-10", "name": "Product J", "qty": 1, "price": 78900 }
+      ]
+    },
+    {
+      "id": "ORD-1009",
+      "date": "2025-01-07",
+      "customerId": "CUS-003",
+      "city": "Алматы",
+      "channel": "Web",
+      "status": "Cancelled",
+      "total": 34500,
+      "items": [
+        { "sku": "SKU-11", "name": "Product K", "qty": 1, "price": 34500 }
+      ],
+      "comment": "Отмена по просьбе клиента"
+    },
+    {
+      "id": "ORD-1010",
+      "date": "2025-01-06",
+      "customerId": "CUS-007",
+      "city": "Астана",
+      "channel": "Web",
+      "status": "New",
+      "total": 56700,
+      "items": [
+        { "sku": "SKU-12", "name": "Product L", "qty": 3, "price": 18900 }
+      ]
+    }
+  ]
+}
